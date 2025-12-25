@@ -7,6 +7,7 @@ export type User = {
   phone?: string;
   company?: string;
   agency?: string;
+  password: string;
 };
 
 type UserState = {

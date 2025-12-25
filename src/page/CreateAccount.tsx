@@ -38,9 +38,10 @@ function CreateAccount() {
         phone: data.phone,
         company: data.company,
         agency: data.agency,
+        password: data.password
       })
     );
-    navigate("/login");
+    navigate("/you");
   };
 
   return (
