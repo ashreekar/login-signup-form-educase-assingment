@@ -100,7 +100,7 @@ const Login = () => {
         <button
           type="submit"
           disabled={!isValid}
-          className={`h-11 mt-4 text-white rounded-md text-sm font-medium ${!isValid ? "bg-[#CBCBCB] cursor-not-allowed" : "bg-[#6C25FF]"
+          className={`h-11 mt-4 cursor-pointer text-white rounded-md text-sm font-medium ${!isValid ? "bg-[#CBCBCB] cursor-not-allowed" : "bg-[#6C25FF]"
             }`}
         >
           Login

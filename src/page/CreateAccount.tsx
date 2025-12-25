@@ -142,7 +142,7 @@ function CreateAccount() {
             </p>
 
             <div className="mt-1.5 flex gap-5">
-              <label className="flex items-center gap-2 text-sm">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <input
                   type="radio"
                   value="yes"
@@ -151,7 +151,7 @@ function CreateAccount() {
                 Yes
               </label>
 
-              <label className="flex items-center gap-2 text-sm">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <input type="radio" value="no" {...register("agency")} />
                 No
               </label>
@@ -169,7 +169,7 @@ function CreateAccount() {
       {/* BUTTON */}
       <button
         type="submit"
-        className="mx-5 mb-5 h-11 bg-[#6C25FF] rounded-md text-white text-sm font-semibold"
+        className="mx-5 mb-5 h-11 bg-[#6C25FF] cursor-pointer rounded-md text-white text-sm font-semibold"
       >
         Create Account
       </button>

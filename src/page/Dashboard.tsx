@@ -42,7 +42,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="mt-2 w-[84.25] text-[#1D2226] text-[14px] mb-8">
+        <div className="mt-2 min-w-[84.25] text-[#1D2226] text-[14px] mb-8">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </div>
