@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../state/user.slice";
+import { useDispatch } from "react-redux";
 
 type FormData = {
   fullName: string;
@@ -12,11 +14,33 @@ type FormData = {
 
 function CreateAccount() {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<FormData>();
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+  });
+
+  watch("email");
+  watch("phone");
+
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-    navigate("/profile");
+    dispatch(
+      registerUser({
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        company: data.company,
+        agency: data.agency,
+      })
+    );
+    navigate("/login");
   };
 
   return (
@@ -33,24 +57,82 @@ function CreateAccount() {
         {/* FORM */}
         <div className="mt-5 flex flex-col gap-4.5">
           {[
-            { label: "Full Name*", name: "fullName", type: "text" },
-            { label: "Phone number*", name: "phone", type: "text" },
-            { label: "Email address*", name: "email", type: "email" },
-            { label: "Password*", name: "password", type: "password" },
-            { label: "Company name", name: "company", type: "text" },
-          ].map((field) => (
-            <div key={field.name} className="relative">
-              <label className="absolute -top-1.75 left-2.25 px-1.25 bg-[#F7F8F9] text-xs text-[#6C25FF]">
-                {field.label}
-              </label>
-              <input
-                {...register(field.name as keyof FormData)}
-                type={field.type}
-                placeholder={field.label.replace("*", "")}
-                className="w-full h-9.5 border border-[#CBCBCB] rounded-md pl-3.5 text-sm"
-              />
-            </div>
-          ))}
+            {
+              label: "Full Name*",
+              name: "fullName",
+              type: "text",
+              rules: { required: "Full name is required" },
+            },
+            {
+              label: "Phone number*",
+              name: "phone",
+              type: "text",
+              rules: {
+                required: "Phone number is required",
+                pattern: {
+                  value: /^[0-9]{10}$/,
+                  message: "Enter a valid 10-digit phone",
+                },
+              },
+            },
+            {
+              label: "Email address*",
+              name: "email",
+              type: "email",
+              rules: {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email",
+                },
+              },
+            },
+            {
+              label: "Password*",
+              name: "password",
+              type: "password",
+              rules: {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              },
+            },
+            {
+              label: "Company name",
+              name: "company",
+              type: "text",
+              rules: {},
+            },
+          ].map((field) => {
+            const error = errors[field.name as keyof FormData];
+
+            return (
+              <div key={field.name} className="relative">
+                <label className="absolute -top-1.75 left-2.25 px-1.25 bg-[#F7F8F9] text-xs text-[#6C25FF]">
+                  {field.label}
+                </label>
+
+                <input
+                  {...register(field.name as keyof FormData, field.rules)}
+                  type={field.type}
+                  placeholder={field.label.replace("*", "")}
+                  className={`w-full h-9.5 border rounded-md pl-3.5 text-sm outline-none
+                    ${error
+                      ? "border-red-500"
+                      : "border-[#CBCBCB]"
+                    }`}
+                />
+
+                {error && (
+                  <p className="text-xs text-red-500 mt-1">
+                    {error.message}
+                  </p>
+                )}
+              </div>
+            );
+          })}
 
           {/* AGENCY */}
           <div className="mt-2">
@@ -60,15 +142,25 @@ function CreateAccount() {
 
             <div className="mt-1.5 flex gap-5">
               <label className="flex items-center gap-2 text-sm">
-                <input {...register("agency")} type="radio" value="yes" />
+                <input
+                  type="radio"
+                  value="yes"
+                  {...register("agency", { required: "Please select Yes or No" })}
+                />
                 Yes
               </label>
 
               <label className="flex items-center gap-2 text-sm">
-                <input {...register("agency")} type="radio" value="no" />
+                <input type="radio" value="no" {...register("agency")} />
                 No
               </label>
             </div>
+
+            {errors.agency && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.agency.message}
+              </p>
+            )}
           </div>
         </div>
       </div>
