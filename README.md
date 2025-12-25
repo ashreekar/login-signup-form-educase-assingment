@@ -1,73 +1,142 @@
-# React + TypeScript + Vite
+# PopX App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PopX is a simple React-based user account management application with registration, login, and dashboard features. It uses **React**, **React Router**, **Redux Toolkit**, and **Tailwind CSS** for the frontend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## React Compiler
+* [Features](#features)
+* [Installation](#installation)
+* [Project Structure](#project-structure)
+* [Usage](#usage)
+* [Components](#components)
+* [State Management](#state-management)
+* [Styling](#styling)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* User Registration and Login
+* Dashboard with user profile display
+* Mobile-friendly design
+* Input validation with React Hook Form
+* Redux store for state management
+* Error handling and invalid credential popup
+* Landing page with navigation to login/signup
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ashreekar/login-signup-form-educase-assingment.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+4. Open in your browser:
+
+```
+http://localhost:5173
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├─ assets/          # Images and icons
+├─ page/            # React pages/components
+│  ├─ Landing.tsx
+│  ├─ CreateAccount.tsx
+│  ├─ Login.tsx
+│  ├─ Dashboard.tsx
+│  ├─ WelcomePage.tsx
+├─ state/           # Redux slices and store
+│  ├─ appStore.ts
+│  ├─ user.slice.ts
+├─ App.tsx          # Routes and main component
+├─ index.tsx        # App entry point
+```
+
+---
+
+## Usage
+
+### Routes
+
+* `/` → Landing page
+* `/create` → Create Account page
+* `/login` → Login page
+* `/you` → Dashboard/Profile page
+
+### Form Validation
+
+* **Registration**: Validates email format and phone number. Required fields show error messages.
+* **Login**: Checks credentials against stored user in Redux state. Invalid login shows a mobile popup.
+
+---
+
+## Components
+
+* **Landing.tsx**
+  Displays welcome text and navigation to signup/login. Includes a footer with navigation icons.
+
+* **CreateAccount.tsx**
+  Registration form with validation, Redux dispatch to store user data.
+
+* **Login.tsx**
+  Login form, validates credentials, dispatches login action, and navigates to Dashboard.
+
+* **Dashboard.tsx**
+  Displays user name and email fetched from Redux. Shows profile image with camera icon overlay.
+
+* **Profile.tsx**
+  User profile view with dummy lorem text and layout styles.
+
+---
+
+## State Management
+
+Using **Redux Toolkit**:
+
+* **user.slice.ts**
+
+  * `registerUser` → Save new user and mark authenticated
+  * `loginUser` → Set authenticated user
+  * `logoutUser` → Clear user and authentication
+
+* **appStore.ts**
+  Configures Redux store with `user` slice.
+
+---
+
+## Styling
+
+* **Tailwind CSS** for responsive layouts, spacing, typography, and colors.
+* Cards, buttons, and input fields use modern UI design.
+* Shadow, dashed borders, and rounded corners implemented per design spec.
+* Icons: Lucide React library and custom SVGs.
+
+---
+
+## Notes
+
+* Currently, user registration is **stored in Redux state only** (no backend).
+* All images and icons use placeholders or online dummy images.
+* Mobile responsiveness is ensured via Tailwind’s flex utilities and spacing classes.
