@@ -8,6 +8,8 @@ import WelcomePage from './page/WelcomePage'
 import Login from './page/Login'
 import CreateAccount from './page/CreateAccount'
 import Dashboard from './page/Dashboard'
+import { appStore } from "./state/appStore.ts"
+import { Provider } from 'react-redux'
 
 const router = createBrowserRouter([
   {
@@ -36,5 +38,7 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router} />
+  <Provider store={appStore}>
+    <RouterProvider router={router} />
+  </Provider>
 )
